@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="d-flex flex-column bd-highlight mb-3">
+    <ul>
+    {{#each expense}}
+    <li>
+      <i class="{{this.categoryIcon}}"></i>
+      <h6>{{this.name}}</h6>
+    </li>
+    {{/each}}
+    </ul>  
+  </div>
+</div>
