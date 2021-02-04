@@ -1,13 +1,41 @@
-<div class="container">
+<div class="container w-50 mt-3">
+  <div>
+    <h4>總額:</h4>
+    <h1 class="text-center mb-3">{{totalAmount}}</h1>
+  </div>
+  <div class="d-flex justify-content-between">
+    <a class="btn btn-secondary" href="/expense-tracker/new">新增</a>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        類別過濾
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" name="home" href="/category/home">家居物業</a></li>
+        <li><a class="dropdown-item" name="transportation" href="/category/transportation">交通出行</a></li>
+        <li><a class="dropdown-item" name="entertainment" href="/category/entertainment">休閒娛樂</a></li>
+        <li><a class="dropdown-item" name="food" href="/category/food">餐飲食品</a></li>
+        <li><a class="dropdown-item" name="other" href="/category/other">其他</a></li>
+      </ul>
+    </div>
+  </div>
   <div class="d-flex flex-column bd-highlight mb-3">
-    <ul>
+    <ul style="list-style-type:none">
     {{#each expense}}
-    <li>
-      <i class="{{this.categoryIcon}}"></i>
-      <h6>{{this.name}}</h6>
-      <h6>{{this.amount}}</h6>
-      <h6>{{this.date}}</h6>
+    <li class="border-top-0 border-3 bg-light">
+      <div class="d-flex flex-row justify-content-between bd-highlight mt-5">
+            <i class="{{this.categoryIcon}} fa-lg m-2"></i>
+            <h6 class="m-2">{{this.name}}</h6>
+            <h6 class="m-2">{{this.amount}}$</h6>
+            <h6 class="m-2">{{this.date}}</h6>
+            <div class="text-end">
+              <a class="btn btn-secondary" href="/expense-tracker/{{this._id}}/edit">編輯</a>
+              <form action="/expense-tracker/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+                <button class="btn btn-secondary ml-1 " type="submit">刪除</button>
+            </div>
+      </div>
     </li>
+    </form>
     {{/each}}
     </ul>  
   </div>
