@@ -29,7 +29,7 @@ if (categoryIcon === "fas fa-home") {
 }
 if (categoryIcon === "fas fa-shuttle-van") {
   dataBase.push({
-    name: `${categoryName.transportation[randomNumber]}`,
+    name: `${categoryName.transportation[0]}`,
     category_ch: categoryCh_name[1],
     date: date[randomNumber],
     amount: amount[randomNumber],
