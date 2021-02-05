@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const routes = require('./routes')
 const app = express()
+const PORT = process.env.PORT || 3000
 
 app.engine('handlebars', handps({defaultLayout:'main'}))
 app.set('view engine','handlebars')
@@ -17,6 +18,6 @@ app.use(routes)
 
 
 
-app.listen(3000,()=>{
-  console.log('localhost:3000')
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })

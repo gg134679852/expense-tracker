@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const db = mongoose.connection
 
-mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/todo-list' 
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 db.on('error',()=>{
   console.log('mongodb error!')
