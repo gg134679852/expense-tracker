@@ -5,19 +5,21 @@
   </div>
   <div class="d-flex justify-content-between">
     <a class="btn btn-secondary" href="/expense-tracker/new">新增</a>
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        類別過濾
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" name="home" href="/category/home">家居物業</a></li>
-        <li><a class="dropdown-item" name="transportation" href="/category/transportation">交通出行</a></li>
-        <li><a class="dropdown-item" name="entertainment" href="/category/entertainment">休閒娛樂</a></li>
-        <li><a class="dropdown-item" name="food" href="/category/food">餐飲食品</a></li>
-        <li><a class="dropdown-item" name="other" href="/category/other">其他</a></li>
-      </ul>
-    </div>
+    <form action="/expense-tracker/filter" method="POST">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          類別過濾
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><button class="dropdown-item" name="icon" value="fas fa-home"type="submit">家居物業</button></li>
+          <li><button class="dropdown-item" name="icon" value="fas fa-shuttle-van" type="submit">交通出行</button></li>
+          <li><button class="dropdown-item" name="icon" value="fas fa-grin-beam" type="submit">休閒娛樂</button></li>
+          <li><button class="dropdown-item" name="icon" value="fas fa-home" type="submit">餐飲食品</button></li>
+          <li><button class="dropdown-item" name="icon" value="fas fa-pen" type="submit">其他</button></li>
+        </ul>
+      </div>
+    </form>
   </div>
   <div class="d-flex flex-column bd-highlight mb-3">
     <ul style="list-style-type:none">
@@ -25,7 +27,7 @@
     <li class="border-top-0 border-3 bg-light">
       <div class="d-flex flex-row justify-content-between bd-highlight mt-5">
             <i class="{{this.categoryIcon}} fa-lg m-2"></i>
-            <h6 class="m-2">{{this.name}}</h6>
+            <h6 class="m-2"name="name">{{this.name}}</h6>
             <h6 class="m-2">{{this.amount}}$</h6>
             <h6 class="m-2">{{this.date}}</h6>
             <div class="text-end">

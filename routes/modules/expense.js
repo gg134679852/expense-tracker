@@ -39,5 +39,19 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
+router.post('/filter', (req, res) => {
 
+  const icon = req.body.icon
+
+  Expense.find({ categoryIcon: { $regex: icon, $options: "i" } })
+    .lean()
+    .then(expense => {
+      let totalAmount = 0
+      expense.forEach(expense => {
+        totalAmount += expense.amount
+      })
+      res.render('index', { expense, totalAmount })
+    })
+    .catch(error => console.error(error))
+})
 module.exports = router
