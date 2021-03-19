@@ -7,29 +7,35 @@
     <a class="btn btn-secondary" href="/expense-tracker/new">新增</a>
     <form action="/expense-tracker/filter" method="POST">
         <select class="categorys-select" name="icon" onchange="this.form.submit()">
+          {{#if selectedCategory}}
+          <option value="{{selectedCategory}}={{selectedCategoryValue}}" selected>{{selectedCategory}}</option>
+          {{/if}}
           <optgroup label="類別選項">
-          <option name="month" value="">全類別</option>
-          <option name="icon"value="fas fa-home">家居物業</option>
-          <option name="icon"value="fas fa-shuttle-van">交通出行</option>
-          <option name="icon"value="fas fa-grin-beam">休閒娛樂</option>
-          <option name="icon"value="fas fa-utensils">餐飲食品</option>
-          <option name="icon"value="fas fa-pen">其他</option>
+          <option name="month" value="全類別=all">全類別</option>
+          <option name="icon"value="家居物業=fas fa-home">家居物業</option>
+          <option name="icon"value="交通出行=fas fa-shuttle-van">交通出行</option>
+          <option name="icon"value="休閒娛樂=fas fa-grin-beam">休閒娛樂</option>
+          <option name="icon"value="餐飲食品=fas fa-utensils">餐飲食品</option>
+          <option name="icon"value="其他=fas fa-pen">其他</option>
         </select>
         <select class="month-select" name="month" onchange="this.form.submit()">
-          <optgroup label="選擇月份">
-        <option name="month" value="">全年度</option>  
-        <option name="month" value="01">1月</option>
-        <option name="month" value="02">2月</option>
-        <option name="month" value="03">3月</option>
-        <option name="month" value="04">4月</option>
-        <option name="month" value="05">5月</option>
-        <option name="month" value="06">6月</option>
-        <option name="month" value="07">7月</option>
-        <option name="month" value="08">8月</option>
-        <option name="month" value="09">9月</option>
-        <option name="month" value="10">10月</option>
-        <option name="month" value="11">11月</option>
-        <option name="month" value="12">12月</option>
+          {{#if selectedMonth}}
+          <option value="{{selectedMonth}}={{selectedMonthValue}}" selected>{{selectedMonth}}</option>
+          {{/if}}
+          <optgroup label="月份選項">
+        <option name="month" value="全年度=all">全年度</option>  
+        <option name="month" value="1月=01">1月</option>
+        <option name="month" value="2月=02">2月</option>
+        <option name="month" value="3月=03">3月</option>
+        <option name="month" value="4月=04">4月</option>
+        <option name="month" value="5月=05">5月</option>
+        <option name="month" value="6月=06">6月</option>
+        <option name="month" value="7月=07">7月</option>
+        <option name="month" value="8月=08">8月</option>
+        <option name="month" value="9月=09">9月</option>
+        <option name="month" value="10月=10">10月</option>
+        <option name="month" value="11月=11">11月</option>
+        <option name="month" value="12月=12">12月</option>
         </select>
     </form>
   </div>
@@ -37,7 +43,7 @@
     <ul style="list-style-type:none">
     {{#each expense}}
     <li class="border-top-0 border-3 bg-light">
-      <div class="d-flex flex-row justify-content-evenly bd-highlight mt-5">
+      <div class="d-flex flex-row justify-content-around bd-highlight mt-5">
             <i class="{{this.categoryIcon}} fa-lg m-2"></i>
               <h6 class="m-2" name="name">{{this.name}}</h6>
               <h6 class="m-2">{{this.amount}}$</h6>

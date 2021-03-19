@@ -7,11 +7,12 @@ router.get('/new',(req,res)=>{
 })
 
 router.post('/',(req,res)=>{
+  const userId = req.user._id
   let { name, date, amount, category, category_ch, categoryIcon, shop} = req.body
   const splitItem = categoryIcon.split('=')
   categoryIcon = splitItem[1]
   category_ch = splitItem[0]
-  return Expense.create({ name, date, amount, category, category_ch, categoryIcon, shop })
+  return Expense.create({ name, date, amount, category, category_ch, categoryIcon, shop, userId })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -24,7 +25,8 @@ router.get('/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-router.put('/:id', (req, res) => { 
+router.put('/:id', (req, res) => {
+  const userId = req.user._id
   const id = req.params.id
   let { name, date, amount, category, category_ch, categoryIcon, shop } = req.body
   const splitItem = categoryIcon.split('=')
@@ -32,7 +34,7 @@ router.put('/:id', (req, res) => {
   category_ch = splitItem[0]
   Expense.findById(id)
     .then(expense=>{
-      Object.assign(expense, { name, date, amount, category, category_ch, categoryIcon, shop })
+      Object.assign(expense, { name, date, amount, category, category_ch, categoryIcon, shop, userId })
       return expense.save()
     })
     .then(() => res.redirect('/'))
@@ -46,12 +48,23 @@ router.delete('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 router.post('/filter', (req, res) => {
-  const {icon,month} = req.body
-  const regexp = new RegExp(`\\b${month}\\b`)
-  
-  if (icon.length === 0 && month.length === 0) return res.redirect('/')
+  let {icon,month} = req.body
+  let splitIcon = icon.split('=')
+  let splitMonth = month.split('=')
+  let selectedMonth = ''
+  let selectedMonthValue = ''
+  let selectedCategory = ''
+  let selectedCategoryValue = ''
+  icon = splitIcon[1]
+  month = splitMonth [1]
+  selectedMonth = splitMonth[0]
+  selectedMonthValue = splitMonth[1]
+  selectedCategory = splitIcon[0]
+  selectedCategoryValue = splitIcon[1]
+  const regexpMonth = new RegExp(`\\b${month}\\b`)
+  if (icon === 'all' && month === 'all') return res.redirect('/')
 
-  if (icon.length !== 0 && month.length === 0){
+  if (icon !== 'all' && month === 'all'){
     Expense.find({ categoryIcon: { $regex: icon, $options: "i" } })
       .lean()
       .then(expense => {
@@ -59,37 +72,37 @@ router.post('/filter', (req, res) => {
         expense.forEach(expense => {
           totalAmount += expense.amount
         })
-        res.render('index', { expense, totalAmount })
+        res.render('index', { expense, totalAmount, selectedCategory, selectedCategoryValue})
       })
       .catch(error => console.error(error))  
   }
 
-  if (icon.length === 0 && month.length !== 0) {
+  if (icon === 'all' && month !== 'all') {
     Expense.find()
     .lean()
     .then(expense => {
-       return expense.filter(expense => expense.date.match(regexp))
+      return expense.filter(expense => expense.date.match(regexpMonth))
     })
       .then(expense =>{
-      let totalAmount = 0
+        let totalAmount = 0
         expense.forEach(expense => {
           totalAmount += expense.amount
     })
-        res.render('index', { expense, totalAmount })
+        res.render('index', { expense, totalAmount, selectedMonth, selectedMonthValue})
   })
  }
-  if (icon.length !== 0 && month.length !== 0) {
+  if (icon !== 'all' && month !== 'all') {
     Expense.find({ categoryIcon: { $regex: icon, $options: "i" }})
       .lean()
       .then(expense => {
-        return expense.filter(expense => expense.date.match(regexp))
+        return expense.filter(expense => expense.date.match(regexpMonth))
       })
       .then(expense => {
         let totalAmount = 0
         expense.forEach(expense => {
           totalAmount += expense.amount
         })
-        res.render('index', { expense, totalAmount })
+        res.render('index', { expense, totalAmount, selectedCategory, selectedCategoryValue, selectedMonth, selectedMonthValue  })
       })
   }
 })
