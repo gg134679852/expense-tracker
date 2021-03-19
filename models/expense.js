@@ -27,6 +27,9 @@ const expenseSchema = new Schema({
     type: String,
     require: 'true'
   },
+  shop:{
+    type: String
+  }
 })
 
 module.exports = mongoose.model('Expense', expenseSchema)

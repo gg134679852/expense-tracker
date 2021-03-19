@@ -4,26 +4,30 @@
 <form action="/expense-tracker/{{expense._id}}?_method=PUT" method="POST">
   <div class="container text-center mt-3 w-50 p-3">
     <div class="col">
-      <h3>名稱</h3>
+      <h3>名稱*</h3>
       <input type="text" name="name" value="{{expense.name}}" required>
     </div>
     <div class="col mt-3">
-      <h3>類型</h3>
+      <h3>類型*</h3>
       <select name="categoryIcon" required>
         <option>{{expense.category_ch}}</option>
-        <option name="home"value="fas fa-home">家居物業</option>
-        <option name="transportation"value="fas fa-shuttle-van">交通出行</option>
-        <option name="entertainment"value="fas fa-grin-beam">休閒娛樂</option>
-        <option name="food"value="fas fa-utensils">餐飲食品</option>
-        <option name="other"value="fas fa-pen">其他</option>
+        <option value="家居物業=fas fa-home">家居物業</option>
+        <option value="交通出行=fas fa-shuttle-van">交通出行</option>
+        <option value="休閒娛樂=fas fa-grin-beam">休閒娛樂</option>
+        <option value="餐飲食品=fas fa-utensils">餐飲食品</option>
+        <option value="其他=fas fa-pen">其他</option>
       </select>
     </div>
     <div class="col mt-3">
-      <h3>金額</h3>
-      <input type="text" name="amount" value={{expense.amount}} required>
+      <h3>店家名稱</h3>
+      <input type="text" name="shop"value={{expense.shop}}>
     </div>
     <div class="col mt-3">
-      <h3>日期</h3>
+      <h3>金額*</h3>
+      <input type="number" name="amount" value={{expense.amount}} required>
+    </div>
+    <div class="col mt-3">
+      <h3>日期*</h3>
       <input type="date" name="date" value="{{expense.date}}" required>
     </div>
     <div class="mt-3">
