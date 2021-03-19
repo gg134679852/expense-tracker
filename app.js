@@ -5,6 +5,9 @@ const methodOverride = require('method-override')
 const routes = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000
+const session = require('express-session')
+const usePassport = require('./config/passport')
+const flash = require('connect-flash')
 
 app.engine('handlebars', handps({defaultLayout:'main'}))
 app.set('view engine','handlebars')
