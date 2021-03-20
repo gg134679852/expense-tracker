@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Expense = require('../../models/expense')
+const {splitFun} = require('../../public/javascripts/splitItem')
 
 router.get('/new',(req,res)=>{
   return res.render('new')
@@ -48,36 +49,26 @@ router.delete('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 router.post('/filter', (req, res) => {
-  let {icon,month} = req.body
-  let splitIcon = icon.split('=')
-  let splitMonth = month.split('=')
-  let selectedMonth = ''
-  let selectedMonthValue = ''
-  let selectedCategory = ''
-  let selectedCategoryValue = ''
-  icon = splitIcon[1]
-  month = splitMonth [1]
-  selectedMonth = splitMonth[0]
-  selectedMonthValue = splitMonth[1]
-  selectedCategory = splitIcon[0]
-  selectedCategoryValue = splitIcon[1]
-  const regexpMonth = new RegExp(`\\b${month}\\b`)
-  if (icon === 'all' && month === 'all') return res.redirect('/')
+  const {icon,month} = req.body
+  const { iconValue, categoryName, Month, monthValue } = splitFun(icon, month)
+  const regexpMonth = new RegExp(`\\b${monthValue}\\b`)
 
-  if (icon !== 'all' && month === 'all'){
-    Expense.find({ categoryIcon: { $regex: icon, $options: "i" } })
+  if (iconValue === 'all' && monthValue === 'all') return res.redirect('/')
+
+  if (iconValue !== 'all' && monthValue === 'all'){
+    Expense.find({ categoryIcon: { $regex: iconValue, $options: "i" } })
       .lean()
       .then(expense => {
         let totalAmount = 0
         expense.forEach(expense => {
           totalAmount += expense.amount
         })
-        res.render('index', { expense, totalAmount, selectedCategory, selectedCategoryValue})
+        res.render('index', { expense, totalAmount, iconValue, categoryName})
       })
       .catch(error => console.error(error))  
   }
 
-  if (icon === 'all' && month !== 'all') {
+  if (iconValue === 'all' && monthValue !== 'all') {
     Expense.find()
     .lean()
     .then(expense => {
@@ -88,11 +79,11 @@ router.post('/filter', (req, res) => {
         expense.forEach(expense => {
           totalAmount += expense.amount
     })
-        res.render('index', { expense, totalAmount, selectedMonth, selectedMonthValue})
+        res.render('index', { expense, totalAmount, Month, monthValue})
   })
  }
   if (icon !== 'all' && month !== 'all') {
-    Expense.find({ categoryIcon: { $regex: icon, $options: "i" }})
+    Expense.find({ categoryIcon: { $regex: iconValue, $options: "i" }})
       .lean()
       .then(expense => {
         return expense.filter(expense => expense.date.match(regexpMonth))
@@ -102,7 +93,7 @@ router.post('/filter', (req, res) => {
         expense.forEach(expense => {
           totalAmount += expense.amount
         })
-        res.render('index', { expense, totalAmount, selectedCategory, selectedCategoryValue, selectedMonth, selectedMonthValue  })
+        res.render('index', { expense, totalAmount, iconValue, categoryName, Month, monthValue  })
       })
   }
 })

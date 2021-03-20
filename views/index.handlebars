@@ -7,8 +7,8 @@
     <a class="btn btn-secondary" href="/expense-tracker/new">新增</a>
     <form action="/expense-tracker/filter" method="POST">
         <select class="categorys-select" name="icon" onchange="this.form.submit()">
-          {{#if selectedCategory}}
-          <option value="{{selectedCategory}}={{selectedCategoryValue}}" selected>{{selectedCategory}}</option>
+          {{#if categoryName}}
+          <option value="{{categoryName}}={{iconValue}}" selected>{{categoryName}}</option>
           {{/if}}
           <optgroup label="類別選項">
           <option name="month" value="全類別=all">全類別</option>
@@ -19,8 +19,8 @@
           <option name="icon"value="其他=fas fa-pen">其他</option>
         </select>
         <select class="month-select" name="month" onchange="this.form.submit()">
-          {{#if selectedMonth}}
-          <option value="{{selectedMonth}}={{selectedMonthValue}}" selected>{{selectedMonth}}</option>
+          {{#if Month}}
+          <option value="{{Month}}={{monthValue}}" selected>{{Month}}</option>
           {{/if}}
           <optgroup label="月份選項">
         <option name="month" value="全年度=all">全年度</option>  
