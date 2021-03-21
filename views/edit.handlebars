@@ -5,11 +5,11 @@
   <div class="container text-center mt-3 w-50 p-3">
     <div class="col">
       <h3>名稱*</h3>
-      <input type="text" name="name" value="{{expense.name}}" required>
+      <input class="form-control" type="text" name="name" value="{{expense.name}}" required>
     </div>
     <div class="col mt-3">
       <h3>類型*</h3>
-      <select name="Icon" required>
+      <select class="form-control" name="Icon" required>
         <option>{{expense.category_ch}}</option>
         <optgroup label="類別選項">
         <option name="icon"value="家居物業=fas fa-home">家居物業</option>

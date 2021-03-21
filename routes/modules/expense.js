@@ -10,7 +10,7 @@ router.get('/new',(req,res)=>{
 router.post('/',(req,res)=>{
   const userId = req.user._id
   let { name, date, amount, category, category_ch, categoryIcon, shop} = req.body
-  const splitItem = categoryIcon.split('=')
+  const splitItem = req.body.Icon.split('=')
   categoryIcon = splitItem[1]
   category_ch = splitItem[0]
   return Expense.create({ name, date, amount, category, category_ch, categoryIcon, shop, userId })
@@ -30,7 +30,7 @@ router.put('/:id', (req, res) => {
   const userId = req.user._id
   const id = req.params.id
   let { name, date, amount, category, category_ch, categoryIcon, shop } = req.body
-  const splitItem = categoryIcon.split('=')
+  const splitItem = req.body.Icon.split('=')
   categoryIcon = splitItem[1]
   category_ch = splitItem[0]
   Expense.findById(id)
