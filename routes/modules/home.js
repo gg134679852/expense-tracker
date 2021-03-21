@@ -4,7 +4,8 @@ const router = express.Router()
 const Expense = require('../../models/expense')
 
 router.get('/',(req,res)=>{
-  Expense.find()
+  const userId = req.user._id
+  Expense.find({ userId })
   .lean()
     .then(expense => {
       let totalAmount = 0
