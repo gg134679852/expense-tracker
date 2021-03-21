@@ -5,7 +5,7 @@
   <div class="container text-center mt-3 w-50 p-3">
     <div class="col">
       <h3>名稱*</h3>
-      <input class="form-control" type="text" name="name" value="{{expense.name}}" required>
+      <input class="form-control" type="text" name="name" value="{{expense.name}}" maxlength="10"required>
     </div>
     <div class="col mt-3">
       <h3>類型*</h3>
@@ -21,7 +21,7 @@
     </div>
     <div class="col mt-3">
       <h3>店家名稱</h3>
-      <input class="form-control" type="text" name="shop"value={{expense.shop}}>
+      <input class="form-control" type="text" name="shop"value={{expense.shop}}maxlength="10">
     </div>
     <div class="col mt-3">
       <h3>金額*</h3>
